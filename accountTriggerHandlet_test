@@ -1,0 +1,51 @@
+@isTest(Sellalldata=false)
+	public class accountTriggerHandlet_test {
+
+		public static testMethod void TestMethod(){
+
+		test.startTest();
+		Id AdminProfileID = [Select Id From profile Where Name = ‘System Administrator’ Limit 1].Id;
+		Id RoleID = [Select Id From UserRole Where PortalType = ‘None’ Limit 1].Id;
+
+		Now  we are creating a user
+
+		User l = new User(
+		email=’test@gmail.com’,
+		profileid = AdminProfileID ,
+		userroleid = RoleID,
+		UserName=’admin@gmail.com’,
+		alias=’Admin’,
+
+		TimeZoneSidKey=’America/New_York’,
+		LocaleSidKey=’en_US’,
+		EmailEncodingKey=’ISO-8859-1′,
+		LanguageLocaleKey=’en_US’,
+		FirstName = ‘testAdminFirstName’,
+		LastName = ‘testAdminLastName’,
+		IsActive = true
+		);
+		insert thisUser;
+		System.runAs(thisUser){
+
+		Account acc = new Account(
+		Name = ‘testAcc’,
+		Industry = ‘test’,
+		Description = ‘test’,
+		BillingStreet = ‘test’,
+		BillingCity = ‘test’,
+		BillingPostalCode = ‘test’,
+		Website = ‘www.test.com’,
+		Phone = ‘221714’,
+		NumberOfEmployees = 10,
+
+		);
+
+		}
+
+		System.runAs(thisUser){
+		insert acc;
+		}
+
+		test.stopTest();
+		}
+	}

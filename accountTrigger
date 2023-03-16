@@ -1,0 +1,12 @@
+
+trigger accountTrigger on account(after Insert){
+List<account> acclist = new List<account>();
+for(account acc : trigger.new){
+if(!acc.active__c){
+acclist.add(acc);
+}
+}
+if(!acclist.Isempty()){
+AccountTriggerHandler.createTaskRecordsonInactiveacccounts(acclist);
+}
+}

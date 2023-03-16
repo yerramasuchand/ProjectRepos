@@ -1,0 +1,27 @@
+public class AccountTriggerHandler {
+    
+    public static void createTaskRecordsonInactiveacccounts(){
+        List<task> tasklisttoInsert = new List<Task>();
+        
+        for(Account acc : acclist){
+            Task taskRec = new tTask();
+            taskrec.Subject = 'Review Account-'+ acc.accountNumber__c;
+            taskrec.AccountId = acc.Id;
+            taskrec.Due_Date__c = acc.createdDate+adddays(7);
+			taskrec.Status='Not Started';
+			taskrec.AssignedTo=acc.OwnerID;
+            tasklisttoInsert.add(taskrec);
+			
+        }
+		
+		if(!tasklisttoInsert.isEmpty()){
+			try{
+			Insert tasklisttoInsert;
+			}
+			catch(exception e){
+				system.debug('error--'+r.getMessage());
+			}
+		}
+    }
+
+}
